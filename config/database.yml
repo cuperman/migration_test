@@ -3,7 +3,7 @@ development:
   encoding: utf8
   host: localhost
   database: migration_test_dev
-  user: root
+  username: root
   password:
   pool: 5
   timeout: 5000
@@ -16,7 +16,7 @@ test:
   encoding: utf8
   host: localhost
   database: migration_test_test
-  user: root
+  username: root
   password:
   pool: 5
   timeout: 5000
@@ -26,7 +26,7 @@ production:
   encoding: utf8
   host: dw-s4
   database: migration_test
-  user: statsdb_rt
+  username: statsdb_rt
   password:
   pool: 5
   timeout: 5000
