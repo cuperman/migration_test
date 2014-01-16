@@ -16,7 +16,7 @@ set :scm, :git # You can set :scm explicitly or Capistrano will make an intellig
 set :branch, "master"
 set :ssh_options, { :forward_agent => true }
 set :deploy_via, :remote_cache
-set :deploy_to, "/opt/rails/report_tool"
+set :deploy_to, "/opt/rails/migration_test"
 #set :user, "jmarch"
 set :user, "jcooper"
 set :use_sudo, true
@@ -40,9 +40,7 @@ on :start do
   'ssh-add -L'
 end
 
-before 'deploy:update_code', 'deploy:files_steal'
-after  :deploy, 'deploy:create_symlink', 'deploy:symlink_shared', 'deploy:migrate'
-after  'deploy:update_code', 'deploy:files_give_back'
+after  :deploy, 'deploy:create_symlink', 'deploy:migrate'
 
 # If you are using Passenger mod_rails uncomment this:
 namespace :deploy do
@@ -50,26 +48,5 @@ namespace :deploy do
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
-  end
-
-  # Symlinks
-  task :symlink_shared do
-    # Use yml files in source control
-    #run "cp #{release_path}/config/database.yml #{release_path}/config/database.src.yml"
-    #run "cp #{release_path}/config/google.yml #{release_path}/config/google.src.yml"
-    #run "ln -nfs #{shared_path}/system/database.yml #{release_path}/config/database.yml"
-    #run "ln -nfs #{shared_path}/system/google.yml #{release_path}/config/google.yml"
-    run "ln -nfs #{shared_path}/system/track.log #{release_path}/log/track.log"
-    run "ln -nfs #{shared_path}/system/cache #{release_path}/cache"
-  end
-
-  # Claim all files from Apache
-  task :files_steal do
-    run "#{try_sudo} chown -R #{user} /opt/rails/report_tool"
-  end
-
-  # Give all files back to Apache after process is complete
-  task :files_give_back do
-    run "#{try_sudo} chown -R www-data /opt/rails/report_tool"
   end
 end
