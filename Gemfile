@@ -21,10 +21,8 @@ group :assets do
 end
 
 group :development do
-  gem 'capistrano'
-  gem 'capistrano-rvm'
-  gem 'capistrano-bundler'
-  gem 'capistrano-rails'
+  gem 'capistrano', '~> 2.15'
+  gem 'rvm-capistrano'
 end
 
 gem 'jquery-rails'
