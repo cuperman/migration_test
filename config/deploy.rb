@@ -5,6 +5,10 @@ set :rvm_bin_path, "/usr/local/rvm/bin"
 require 'bundler/capistrano'
 set :bundle_without,  [:development, :test]
 
+require 'delayed/recipes'
+set :rails_env, "production"  # required for delayed job
+set :delayed_job_args, "-n 3" # start multiple workers
+
 default_run_options[:pty] = true
 
 set :application, "migration_test"
