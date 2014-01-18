@@ -46,6 +46,10 @@ end
 
 after  :deploy, 'deploy:create_symlink', 'deploy:migrate'
 
+after "deploy:stop",    "delayed_job:stop"
+after "deploy:start",   "delayed_job:start"
+after "deploy:restart", "delayed_job:restart"
+
 # If you are using Passenger mod_rails uncomment this:
 namespace :deploy do
   task :start do ; end
